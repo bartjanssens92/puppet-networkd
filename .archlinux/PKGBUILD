@@ -1,4 +1,4 @@
-MUDULENAME=networkd
+MODULENAME=networkd
 
 pkgname=puppet-module-${MODULENAME}
 pkgver=1
