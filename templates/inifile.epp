@@ -1,0 +1,10 @@
+<%- |
+  $data,
+| -%>
+<%- $data.each |$section| { -%>
+[<%= $section[0] %>]
+<%- $section[1].each |$line| { -%>
+<%= $line %>
+<%- } -%>
+
+<%- } -%>
