@@ -1,0 +1,18 @@
+MUDULENAME=networkd
+
+pkgname=puppet-module-${MODULENAME}
+pkgver=1
+pkgrel=${BUILD_NUMBER}
+pkgdesc="Puppet module ${MODULENAME}"
+arch=('any')
+depends=('puppet')
+
+build() {
+  true
+}
+
+package() {
+  cd "${srcdir}"
+  mkdir -p "${pkgdir}/etc/puppet/code/modules/${MODULENAME}"
+  cp -rf * "${pkgdir}/etc/puppet/code/modules/${MODULENAME}/"
+}
