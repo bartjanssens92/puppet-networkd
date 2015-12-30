@@ -13,6 +13,6 @@ build() {
 
 package() {
   cd "${srcdir}"
-  mkdir -p "${pkgdir}/etc/puppet/code/modules/${MODULENAME}"
-  cp -rf * "${pkgdir}/etc/puppet/code/modules/${MODULENAME}/"
+  mkdir -p "${pkgdir}/etc/puppetlabs/code/modules/${MODULENAME}"
+  cp -rf * "${pkgdir}/etc/puppetlabs/code/modules/${MODULENAME}/"
 }
