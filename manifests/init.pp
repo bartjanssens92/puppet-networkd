@@ -1,5 +1,7 @@
+# This class manages the service and configuration of systemd-networkd.
 #
-# Class networkd
+# @example Start managing systemd-networkd
+#   include ::networkd
 #
 # This class manages the service and configuration of systemd-networkd.
 #
