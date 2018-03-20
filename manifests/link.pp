@@ -1,3 +1,6 @@
+#
+# Define networkd::link
+#
 define networkd::link(
   String  $macaddress = undef,
   Integer $order      = 25,
@@ -6,10 +9,10 @@ define networkd::link(
   include networkd
 
   $match = [
-    "MACAddress=$macaddress",
+    "MACAddress=${macaddress}",
   ]
   $link = [
-    "Name=$name",
+    "Name=${name}",
   ]
 
   file { "/etc/systemd/network/${order}-${name}.link":
@@ -17,7 +20,7 @@ define networkd::link(
   }
 
   if $network != undef {
-    networkd::network{"$name":
+    networkd::network{$name:
       macaddress => $macaddress,
       *          => $network,
     }

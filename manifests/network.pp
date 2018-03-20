@@ -1,37 +1,40 @@
+#
+# Define networkd::network
+#
 define networkd::network(
-  String $iface=$name,
-  Array[String]     $address    = [],
-  Optional[String]  $macaddress = undef,
-  Integer           $order      = 25,
+  String            $iface               = $name,
+  Array[String]     $address             = [],
+  Array[String]     $dns                 = [],
+  Array[String]     $domains             = [],
+  Integer           $order               = 25,
+  Optional[Boolean] $dhcp                = undef,
   Optional[Boolean] $linklocaladdressing = undef,
-  Optional[Boolean] $llmnr = undef,
-  Optional[Boolean] $dhcp = undef,
-  Array[String]     $domains    = [],
-  Array[String]     $dns        = [],
+  Optional[Boolean] $llmnr               = undef,
+  Optional[String]  $macaddress          = undef,
 ){
   include networkd
 
   concat { "networkd::network-${name}":
-    path   => "/etc/systemd/network/${order}-${name}.network",
     ensure => present,
+    path   => "/etc/systemd/network/${order}-${name}.network",
   }
 
   if $macaddress != undef {
-    $match = [ "MACAddress=$macaddress" ]
+    $match = [ "MACAddress=${macaddress}" ]
   } else {
-    $match = [ "Name=$name" ]
+    $match = [ "Name=${name}" ]
   }
 
   $values = [
-    ["LinkLocalAddressing", "$linklocaladdressing"],
-    ["LLMNR", "$llmnr"],
-    ["DHCP", "$dhcp"],
-    ["Domains", join($domains, " ")],
-    ["DNS", join($dns, " ")],
-    ["Address", join($address, " ")],
+    ['LinkLocalAddressing', $linklocaladdressing],
+    ['LLMNR', $llmnr],
+    ['DHCP', $dhcp],
+    ['Domains', join($domains, ' ')],
+    ['DNS', join($dns, ' ')],
+    ['Address', join($address, ' ')],
   ].filter |$i| { ! empty($i[1]) }
 
-  $network = $values.map |$i| { join($i,"=")}
+  $network = $values.map |$i| { join($i,'=')}
 
   concat::fragment { "networkd::network-${name}.network":
     target  => "networkd::network-${name}",

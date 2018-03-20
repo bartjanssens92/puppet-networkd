@@ -1,7 +1,13 @@
-class networkd {
-  service { "systemd-networkd":
-    ensure  => "running",
-    enable  => "true",
+#
+# Class networkd
+#
+class networkd (
+  Boolean $purge = true,
+
+) {
+  service { 'systemd-networkd':
+    ensure => 'running',
+    enable => true,
   }
 
   stage { 'network':
@@ -11,10 +17,10 @@ class networkd {
     stage => 'network'
   }
   file { '/etc/systemd/network':
-    ensure => directory,		# make sure this is a directory
-    recurse => true,		# recursively manage directory
-    purge => true,
-    force => true,
-    notify => Service["systemd-networkd"],
+    ensure  => directory,
+    recurse => true,
+    purge   => $purge,
+    force   => true,
+    notify  => Service['systemd-networkd'],
   }
 }

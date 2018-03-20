@@ -1,3 +1,6 @@
+#
+# Define networkd::netdev::vlan
+#
 define networkd::netdev::vlan(
   String  $interface,
   Integer $id,
@@ -7,12 +10,12 @@ define networkd::netdev::vlan(
   include networkd
 
   $data = [
-    ["NetDev", [
+    ['NetDev', [
       "Name=${name}",
-      "Kind=vlan",
+      'Kind=vlan',
     ],],
-    ["VLAN", [
-      "Id=$id"
+    ['VLAN', [
+      "Id=${id}"
     ]]
   ]
 
@@ -21,7 +24,7 @@ define networkd::netdev::vlan(
   }
 
   if $network != undef {
-    networkd::network{"$name":
+    networkd::network{$name:
       *          => $network,
     }
   }

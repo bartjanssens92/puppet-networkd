@@ -1,18 +1,21 @@
+#
+# Define networkd::netdev::macvlan
+#
 define networkd::netdev::macvlan(
   String  $interface,
-  String  $mode       = "bridge",
+  String  $mode       = 'bridge',
   Integer $order      = 25,
   Hash    $network    = undef,
 ) {
   include networkd
 
   $data = [
-    ["NetDev", [
+    ['NetDev', [
       "Name=${name}",
-      "Kind=macvlan",
+      'Kind=macvlan',
     ],],
-    ["MACVLAN", [
-      "mode=$mode"
+    ['MACVLAN', [
+      "mode=${mode}"
     ]]
   ]
 
@@ -21,7 +24,7 @@ define networkd::netdev::macvlan(
   }
 
   if $network != undef {
-    networkd::network{"$name":
+    networkd::network{$name:
       *          => $network,
     }
   }
