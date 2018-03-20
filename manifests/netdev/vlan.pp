@@ -1,5 +1,17 @@
 #
-# Define networkd::netdev::vlan
+# This define allows for the creation of vlans.
+#
+# @param interface
+#    the name of the interface
+#
+# @param id
+#    the id of the vlan
+#
+# @param network
+#    the options of the network
+#
+# @param order
+#    the order of the vlan
 #
 define networkd::netdev::vlan(
   String  $interface,

@@ -1,6 +1,11 @@
 #
 # Class networkd
 #
+# This class manages the service and configuration of systemd-networkd.
+#
+# @example Start managing systemd-networkd
+#   include ::networkd
+#
 class networkd (
   Boolean $purge = true,
 ) {
@@ -15,6 +20,7 @@ class networkd (
   Networkd::Network {
     stage => 'network'
   }
+
   file { '/etc/systemd/network':
     ensure  => directory,
     recurse => true,

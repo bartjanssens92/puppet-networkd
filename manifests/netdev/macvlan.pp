@@ -1,5 +1,17 @@
 #
-# Define networkd::netdev::macvlan
+# The define allows for the managing of vlans.
+#
+# @param interface
+#    the name of the interface
+#
+# @param mode
+#    the mode to use
+#
+# @param network
+#    the network options of the interface
+#
+# @param order
+#    the order of the netdev
 #
 define networkd::netdev::macvlan(
   String  $interface,
