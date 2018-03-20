@@ -3,7 +3,6 @@
 #
 class networkd (
   Boolean $purge = true,
-
 ) {
   service { 'systemd-networkd':
     ensure => 'running',

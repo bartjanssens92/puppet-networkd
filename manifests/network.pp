@@ -41,6 +41,4 @@ define networkd::network(
     content => epp('networkd/inifile.epp',{data => [ ['Match', $match], ['Network', $network]]}),
     order   => '01'
   }
-
-
 }
