@@ -76,9 +76,9 @@ define networkd::network(
   }
 
   $values = [
-    ['LinkLocalAddressing', $linklocaladdressing],
-    ['LLMNR', $llmnr],
-    ['DHCP', $dhcp],
+    ['LinkLocalAddressing', String($linklocaladdressing)],
+    ['LLMNR', String($llmnr)],
+    ['DHCP', String($dhcp)],
     ['Domains', join($domains, ' ')],
     ['DNS', join($dns, ' ')],
     ['Address', join($address, ' ')],
