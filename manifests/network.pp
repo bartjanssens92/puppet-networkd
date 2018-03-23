@@ -32,8 +32,8 @@
 # @example
 #    ```
 #    ::networkd::network { 'enp0s31f6':
-#      dns                 => '8.8.8.8',
-#      address             => '192.168.10.199',
+#      dns                 => ['8.8.8.8'],
+#      address             => ['192.168.10.199'],
 #      gateway             => '192.168.10.1',
 #      linklocaladdressing => true,
 #    ```
@@ -61,6 +61,7 @@ define networkd::network(
   Optional[Boolean] $linklocaladdressing = undef,
   Optional[Boolean] $llmnr               = undef,
   Optional[String]  $macaddress          = undef,
+  Optional[String]  $gateway             = undef,
 ){
   include networkd
 
@@ -79,6 +80,7 @@ define networkd::network(
     ['LinkLocalAddressing', $linklocaladdressing],
     ['LLMNR', $llmnr],
     ['DHCP', $dhcp],
+    ['Gateway', String($gateway)],
     ['Domains', join($domains, ' ')],
     ['DNS', join($dns, ' ')],
     ['Address', join($address, ' ')],
