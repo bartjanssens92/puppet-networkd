@@ -12,7 +12,7 @@
 #    what setting for dhcp to use
 #
 # @param dns
-#    what dns to use
+#    what dns to use, multiple can de defined using an array
 #
 # @param domains
 #    which domain to use, can multiples
@@ -31,9 +31,13 @@
 #
 # @example
 #    ```
-#    ::networkd::network { 'enp0s31f6':
-#      dns                 => '8.8.8.8',
-#      address             => '192.168.10.199',
+#    ::networkd::network { 'ethernet':
+#      iface               => 'enp0s3',
+#      dns                 => [
+#        '8.8.8.8'
+#        '8.8.4.4'
+#      ],
+#      address             => ['192.168.10.199'],
 #      gateway             => '192.168.10.1',
 #      linklocaladdressing => true,
 #    ```
@@ -42,10 +46,10 @@
 #    /etc/systemd/network/99-enp.network
 #
 #    [Match]
-#    Name=enp0s31f6
+#    Name=enp0s3
 #
 #    [Network]
-#    DNS=8.8.8.8
+#    DNS=8.8.8.8 8.8.4.4
 #    Address=192.168.10.199
 #    Gateway=192.168.10.1
 #    LinkLocalAddressing=yes
@@ -58,6 +62,7 @@ define networkd::network(
   Array[String]     $domains             = [],
   Integer           $order               = 25,
   Optional[Boolean] $dhcp                = undef,
+  Optional[Boolean] $gateway             = undef,
   Optional[Boolean] $linklocaladdressing = undef,
   Optional[Boolean] $llmnr               = undef,
   Optional[String]  $macaddress          = undef,
@@ -72,13 +77,14 @@ define networkd::network(
   if $macaddress != undef {
     $match = [ "MACAddress=${macaddress}" ]
   } else {
-    $match = [ "Name=${name}" ]
+    $match = [ "Name=${iface}" ]
   }
 
   $values = [
     ['LinkLocalAddressing', String($linklocaladdressing)],
     ['LLMNR', String($llmnr)],
     ['DHCP', String($dhcp)],
+    ['Gateway', String($gateway)],
     ['Domains', join($domains, ' ')],
     ['DNS', join($dns, ' ')],
     ['Address', join($address, ' ')],
