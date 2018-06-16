@@ -61,11 +61,11 @@ define networkd::network(
   Array[String]     $dns                 = [],
   Array[String]     $domains             = [],
   Integer           $order               = 25,
+  Optional[String]  $gateway             = undef,
+  Optional[String]  $macaddress          = undef,
   Optional[Boolean] $dhcp                = undef,
-  Optional[Boolean] $gateway             = undef,
   Optional[Boolean] $linklocaladdressing = undef,
   Optional[Boolean] $llmnr               = undef,
-  Optional[String]  $macaddress          = undef,
 ){
   include networkd
 
